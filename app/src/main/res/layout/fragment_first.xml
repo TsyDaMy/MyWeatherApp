@@ -60,6 +60,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
+    <EditText
+        android:id="@+id/region_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="64dp"
+        android:hint="Введіть регіон (необов'язково)"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/city_edit_text" />
+
     <Button
         android:id="@+id/confirm_button"
         android:layout_width="wrap_content"
@@ -68,6 +83,6 @@
         android:text="Підтвердити"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/city_edit_text" />
+        app:layout_constraintTop_toBottomOf="@+id/region_edit_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

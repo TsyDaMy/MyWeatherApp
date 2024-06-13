@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.weatherapp.R
@@ -38,23 +39,26 @@ class FirstFragment : Fragment() {
             .into(binding.bg)
 
         val geocoder = Geocoder(requireContext(), Locale.getDefault())
-        val editText = binding.cityEditText
-        binding.confirmButton.setOnClickListener {
-            val text = editText.text.toString().trim()
+        val editTextCity = binding.cityEditText
+        val editTextRegion = binding.regionEditText
 
-            if (text.isNotBlank()) {
+        binding.confirmButton.setOnClickListener {
+            val city = editTextCity.text.toString().trim()
+            val region = editTextRegion.text.toString().trim()
+
+            if (city.isNotBlank()) {
                 try {
-                    viewModel.checkCityName(text, geocoder)
-                    viewModel.setSelectedCity(text)
-                    val action = FirstFragmentDirections.FirstToSecond(text)
-                    findNavController().navigate(action)
+                    viewModel.checkCityName(city, geocoder)
+                    viewModel.setSelectedCity(city)
+                    val action = FirstFragmentDirections.FirstToSecond(city, region) // Передаємо місто і регіон
+                    findNavController().navigate(action as NavDirections)
                 } catch (e: IOException) {
-                    editText.error = "Не вдалося отримати дані з Geocoder"
+                    editTextCity.error = "Не вдалося отримати дані з Geocoder"
                 } catch (e: IllegalArgumentException) {
-                    editText.error = e.message
+                    editTextCity.error = e.message
                 }
             } else {
-                editText.error = "Будь ласка, введіть назву міста"
+                editTextCity.error = "Будь ласка, введіть назву міста"
             }
         }
     }

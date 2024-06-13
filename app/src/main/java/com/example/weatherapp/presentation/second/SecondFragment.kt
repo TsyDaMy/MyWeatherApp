@@ -72,7 +72,9 @@ class SecondFragment : Fragment() {
         binding.sun.max = 100
 
         val city = arguments?.getString("city")
-        viewModel.setCity(city)
+        val region = arguments?.getString("region") ?: "" // Отримуємо регіон, якщо він є
+
+        viewModel.setCity(city, region) // Передаємо місто і регіон до ViewModel
 
         viewModel.currentWeatherState.observe(viewLifecycleOwner) { weatherState ->
             handleWeatherState(weatherState, views, swipeRefreshLayout)
@@ -82,7 +84,7 @@ class SecondFragment : Fragment() {
         }
 
         swipeRefreshLayout.setOnRefreshListener {
-            viewModel.setCity(city)
+            viewModel.setCity(city, region)
         }
 
         initRvHour()
@@ -175,7 +177,7 @@ class SecondFragment : Fragment() {
             }
             adapterH.submitList(listH)
             val listD = ArrayList<ForecastDayData>()
-            for (i in 0 until 7) {
+            for (i in 0 until 3) {
                 val dayD = weatherData.forecast.forecastDays[i]
                 val itemD = ForecastDayData(
                     viewModel.transformDate(dayD.date),

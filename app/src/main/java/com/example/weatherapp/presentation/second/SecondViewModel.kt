@@ -58,19 +58,22 @@ class SecondViewModel(private val weatherRepository: WeatherRepository): ViewMod
     }
 
     private var city: String? = null
+    private var region: String = "" // Змінна для зберігання регіону
 
-    fun setCity(city: String?) {
+    fun setCity(city: String?, region: String = "") {
         this.city = city
+        this.region = region
         refreshWeather()
     }
 
     fun refreshWeather() {
         city?.let { cityName ->
+            val location = if (region.isNotBlank()) "$cityName, $region" else cityName
             viewModelScope.launch {
                 _currentWeatherState.value = WeatherState.Loading
                 _forecastWeatherState.value = WeatherState.Loading
                 try {
-                    val (currentResponse, forecastResponse) = weatherRepository.getWeather(cityName = cityName)
+                    val (currentResponse, forecastResponse) = weatherRepository.getWeather(cityName = location)
                     handleCurrentResponse(currentResponse)
                     handleForecastResponse(forecastResponse)
                 } catch (e: Exception) {

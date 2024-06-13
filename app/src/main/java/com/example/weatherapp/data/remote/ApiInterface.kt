@@ -18,7 +18,7 @@ interface ApiInterface {
     suspend fun getForecastWeather(
         @Query("key") apiKey: String,
         @Query("q") cityName: String,
-        @Query("days") days: Int = 7,
+        @Query("days") days: Int = 3,
         @Query("lang") lang: String = "uk"
     ): Response<WeatherData>
 }
